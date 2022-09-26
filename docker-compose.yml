@@ -1,0 +1,16 @@
+version: '3'
+services:
+  rtmp:
+    build: .
+    ports: 
+    - 8000:8000
+    - 1935:1935
+    volumes:
+      - ./src:/usr/src/app
+    environment:
+      API_URL: 'http://host.docker.internal:3002'
+    command: 'npm run dev'
+    networks:
+      - foxkdev
+networks:
+  foxkdev:
