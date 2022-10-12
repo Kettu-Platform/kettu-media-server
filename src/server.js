@@ -20,11 +20,11 @@ const config = {
   //   key: './privatekey.pem',
   //   cert: './certificate.pem',
   // },
-  auth: {
-    api: true,
-    api_user: 'admin',
-    api_pass: 'admin',
-  },
+  // auth: {
+  //   api: true,
+  //   api_user: 'admin',
+  //   api_pass: 'admin',
+  // },
   fission: {
     ffmpeg: '/usr/local/share/ffmpeg',
     tasks: [
@@ -63,13 +63,16 @@ nms.on('preConnect', (id, args) => {
   //console.log('[NodeEvent on preConnect]', `id=${id} args=${JSON.stringify(args)}`);
   // let session = nms.getSession(id);
   // session.reject();
+  // console.log('CONNECT PRE', id, session)
 });
 
 nms.on('postConnect', (id, args) => {
+  // console.log("POSTTTT")
   //console.log('[NodeEvent on postConnect]', `id=${id} args=${JSON.stringify(args)}`);
 });
 
 nms.on('doneConnect', (id, args) => {
+  console.log('CONNECT DONE', id, args);
   // enviar peticion con id + ip como desconectado, si es streamer no hacer nada, si es viewer remove stat
   //console.log('[NodeEvent on doneConnect]', `id=${id} args=${JSON.stringify(args)}`);
 });
@@ -118,17 +121,20 @@ nms.on('donePublish', (id, streamPath, args) => {
 });
 
 nms.on('prePlay', (id, StreamPath, args) => {
+  console.log('PRE PLAY')
   // viewer se conecta a stream, enviar stats con id + ip
   //console.log('[NodeEvent on prePlay]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
-  // let session = nms.getSession(id);
+  let session = nms.getSession(id);
   // session.reject();
 });
 
 nms.on('postPlay', (id, StreamPath, args) => {
+  console.log('POST PLAY')
   //console.log('[NodeEvent on postPlay]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
 });
 
 nms.on('donePlay', (id, StreamPath, args) => {
+  console.log('DONE PLAY')
   // viewer denegado
   //console.log('[NodeEvent on donePlay]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
 });

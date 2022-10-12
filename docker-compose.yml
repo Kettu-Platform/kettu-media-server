@@ -9,7 +9,7 @@ services:
       - ./src:/usr/src/app
     environment:
       API_URL: 'http://host.docker.internal:3002'
-    command: 'npm run dev'
+    command: 'yarn dev'
     networks:
       - foxkdev
 networks:
