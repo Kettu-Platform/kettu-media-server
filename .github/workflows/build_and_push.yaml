@@ -8,7 +8,7 @@ on:
       - main
 env:
   NAMESPACE: production
-  REGISTRY_HOST: us-west1-docker.pkg.dev
+  REGISTRY_HOST: europe-west1-docker.pkg.dev
   SERVICE_NAME: kettu-media-server
 jobs:
   build-push-deploy:
