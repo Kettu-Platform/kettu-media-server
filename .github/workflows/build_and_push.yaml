@@ -39,7 +39,7 @@ jobs:
       # Get the GKE credentials so we can deploy to the cluster
       - name: 'Auth Cluster'
         run: |-
-          gcloud container clusters get-credentials "$GCP_PROJECT-gke" --zone "us-west1"
+          gcloud container clusters get-credentials "kettu-gke" --region "europe-west1"
 
       # Deploy sample image to the GKE cluster
       - name: Deploy
