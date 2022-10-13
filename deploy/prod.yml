@@ -33,13 +33,13 @@ spec:
         - containerPort: 8000
         livenessProbe:
           httpGet:
-            path: /admin/server
+            path: /api/server
             port: 8000
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
           httpGet:
-            path: /admin/server
+            path: /api/server
             port: 8000
           initialDelaySeconds: 10
           periodSeconds: 30
