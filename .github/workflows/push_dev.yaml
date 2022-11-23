@@ -1,20 +1,17 @@
-name: Push to K8 in GCP
+name: Push Development
 on: 
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - develop
 env:
-  NAMESPACE: production
+  NAMESPACE: development
   REGISTRY_HOST: europe-west1-docker.pkg.dev
   SERVICE_NAME: kettu-media-server
 jobs:
   build-push-deploy:
     name: "Building, Push And Deploy to K8"
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
     steps:
       - run: |-
           echo "IMAGE=$REGISTRY_HOST/kettu-324518/kettu-registry/$SERVICE_NAME:latest" >> $GITHUB_ENV
@@ -44,7 +41,7 @@ jobs:
       # Deploy sample image to the GKE cluster
       - name: Deploy
         run: |-
-          envsubst < deploy/prod.yml | kubectl apply -f -
+          envsubst < deploy/dev.yml | kubectl apply -f -
 
 
 
