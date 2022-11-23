@@ -70,7 +70,7 @@ metadata:
   name: kettu-media-service-http
   namespace: production
   labels:
-    name: kettu-media-service
+    name: kettu-media-service-http
 spec:
   type: NodePort
   ports:
