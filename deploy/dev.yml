@@ -35,12 +35,14 @@ spec:
           httpGet:
             path: /api/server
             port: 8000
+          timeoutSeconds: 30
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
           httpGet:
             path: /api/server
             port: 8000
+          timeoutSeconds: 30
           initialDelaySeconds: 10
           periodSeconds: 30
       imagePullSecrets:
