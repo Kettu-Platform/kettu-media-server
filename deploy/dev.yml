@@ -58,9 +58,6 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - name: admin
-      port: 80
-      targetPort: 8000
     - name: rtmp
       port: 1935
       targetPort: 1935
@@ -68,3 +65,18 @@ spec:
     app: kettu-media-server-dev
 
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kettu-media-service-dev
+  namespace: development
+  labels:
+    name: kettu-media-service-dev
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8000
+  selector:
+    app: kettu-media-server-dev
