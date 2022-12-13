@@ -73,7 +73,25 @@ nms.on('postConnect', (id, args) => {
 
 nms.on('doneConnect', (id, args) => {
   console.log('CONNECT DONE', id, args);
+
   // enviar peticion con id + ip como desconectado, si es streamer no hacer nada, si es viewer remove stat
+  if(args.query?.mediaId) {
+    axios.post(`${process.env.API_URL}/metrics`, {
+      channelId: args.query.channelId,
+      userId: args.query.userId,
+      mediaId: args.query.mediaId,
+      type: 'view',
+      value: -1,
+    })
+    .then((data) => {
+      console.log('unview ok')
+    })
+    .catch((err) => {
+      console.log('error view')
+      //console.log(err, 'error disconnecting')
+    })
+  }
+
   //console.log('[NodeEvent on doneConnect]', `id=${id} args=${JSON.stringify(args)}`);
 });
 
@@ -120,11 +138,26 @@ nms.on('donePublish', (id, streamPath, args) => {
 
 });
 
-nms.on('prePlay', (id, StreamPath, args) => {
-  console.log('PRE PLAY')
+nms.on('prePlay', (id, streamPath, args) => {
+  console.log('PRE PLAY', JSON.stringify(args))
   // viewer se conecta a stream, enviar stats con id + ip
+
+  axios.post(`${process.env.API_URL}/metrics`, {
+    channelId: args.channelId,
+    userId: args.userId,
+    mediaId: args.mediaId,
+    type: 'view',
+    value: 1,
+  })
+  .then((data) => {
+    console.log('view ok')
+  })
+  .catch((err) => {
+    console.log('error view')
+    //console.log(err, 'error disconnecting')
+  })
   //console.log('[NodeEvent on prePlay]', `id=${id} StreamPath=${StreamPath} args=${JSON.stringify(args)}`);
-  let session = nms.getSession(id);
+  // let session = nms.getSession(id);
   // session.reject();
 });
 

@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kettu-media-server
+  name: kettu-media-server-dev
   namespace: development
   labels:
-    name: kettu-media-server
+    name: kettu-media-server-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kettu-media-server
+      app: kettu-media-server-dev
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -18,29 +18,31 @@ spec:
   template:
     metadata:
       labels:
-        app: kettu-media-server
+        app: kettu-media-server-dev
     spec:
       containers:
-      - name: kettu-media-server
+      - name: kettu-media-server-dev
         image: '$IMAGE'
         imagePullPolicy: Always
         env:
           - name: NODE_ENV
             value: "run"
           - name: API_URL
-            value: "http://kettu-api-service"
+            value: "http://kettu-api-service-dev"
         ports:
         - containerPort: 8000
         livenessProbe:
           httpGet:
             path: /api/server
             port: 8000
+          timeoutSeconds: 30
           initialDelaySeconds: 10
           periodSeconds: 30
         readinessProbe:
           httpGet:
             path: /api/server
             port: 8000
+          timeoutSeconds: 30
           initialDelaySeconds: 10
           periodSeconds: 30
       imagePullSecrets:
@@ -49,10 +51,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kettu-media-server-service
+  name: kettu-media-server-service-dev
   namespace: development
   labels:
-    name: kettu-media-server
+    name: kettu-media-server-service-dev
 spec:
   type: LoadBalancer
   ports:
@@ -63,6 +65,4 @@ spec:
       port: 1935
       targetPort: 1935
   selector:
-    app: kettu-media-server
-
-
+    app: kettu-media-server-dev

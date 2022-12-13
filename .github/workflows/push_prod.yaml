@@ -7,6 +7,8 @@ env:
   NAMESPACE: production
   REGISTRY_HOST: europe-west1-docker.pkg.dev
   SERVICE_NAME: kettu-media-server
+  CLUSTER_PROD: ${{ secrets.CLUSTER_PROD }}
+  GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
 jobs:
   build-push-deploy:
     name: "Building, Push And Deploy to K8"
@@ -14,7 +16,7 @@ jobs:
     environment: production
     steps:
       - run: |-
-          echo "IMAGE=$REGISTRY_HOST/kettu-324518/kettu-registry/$SERVICE_NAME:latest" >> $GITHUB_ENV
+          echo "IMAGE=$REGISTRY_HOST/$GCP_PROJECT/kettu-registry/$SERVICE_NAME:latest" >> $GITHUB_ENV
         shell: bash
       - uses: actions/checkout@v2
       - id: 'auth'
@@ -36,13 +38,9 @@ jobs:
       # Get the GKE credentials so we can deploy to the cluster
       - name: 'Auth Cluster'
         run: |-
-          gcloud container clusters get-credentials "kettu-gke" --region "europe-west1"
+          gcloud container clusters get-credentials "$CLUSTER_PROD" --region "europe-west1"
 
       # Deploy sample image to the GKE cluster
       - name: Deploy
         run: |-
           envsubst < deploy/prod.yml | kubectl apply -f -
-
-
-
-  
