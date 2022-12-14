@@ -15,4 +15,4 @@ RUN yarn
 COPY src/ .
 
 EXPOSE 3000
-CMD [ "yarn", "run", "start:prod" ]
+CMD [ "yarn", "run", "start:dev" ]
