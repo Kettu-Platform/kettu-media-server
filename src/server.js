@@ -25,11 +25,24 @@ const config = {
   //   api_user: 'admin',
   //   api_pass: 'admin',
   // },
-  fission: {
-    ffmpeg: '/usr/local/share/ffmpeg',
+  trans: {
+    ffmpeg: '/usr/bin/ffmpeg',
     tasks: [
       {
-        rule: "v1/*",
+        app: 'v1',
+        hls: true,
+        hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
+        hlsKeep: true, // to prevent hls file delete after end the stream
+        mp4: true,
+        mp4Flags: '[movflags=frag_keyframe+empty_moov]',
+      },
+    ],
+  },
+  fission: {
+    ffmpeg: '/usr/bin/ffmpeg',
+    tasks: [
+      {
+        rule: "v1",
         model: [
           {
             ab: "128k",

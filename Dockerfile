@@ -1,3 +1,4 @@
+FROM sitkevij/ffmpeg:4.0-alpine
 FROM node:latest
 # Create app directory
 WORKDIR /usr/src/app
