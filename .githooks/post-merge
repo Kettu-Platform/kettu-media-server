@@ -1,0 +1,2 @@
+#!/bin/sh
+kettu-cli run kettu-web "yarn"
